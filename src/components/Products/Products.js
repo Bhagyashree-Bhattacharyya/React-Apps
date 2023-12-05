@@ -1,6 +1,7 @@
 import ListItem from "./ListItems/ListItem";
 import {useState} from "react";
 
+/*
 const items = [
     {    
         id : 0,
@@ -31,12 +32,13 @@ const items = [
         thumbnail: "placeholder.png"
     }    
 ]
+*/
 
 const Product = () => {
-    const [title, setTitle] = useState("")
-    const [price, setPrice] = useState(0)
-    const [discountedPrice, setDiscountedPrice] = useState(0)
-    const [thumbnail, setThumbnail] = useState("")
+//    const [title, setTitle] = useState("")
+//    const [price, setPrice] = useState(0)
+//    const [discountedPrice, setDiscountedPrice] = useState(0)
+//    const [thumbnail, setThumbnail] = useState("")
 
     const [item, setItem] = useState({
         id: 0,
@@ -46,6 +48,7 @@ const Product = () => {
         thumbnail: "placeholder.png"
     })
 
+/*    
     const handleTitle = (event) => {
         // console.log(event)
         // console.log(event.target.value)
@@ -79,25 +82,35 @@ const Product = () => {
             thumbnail: event.target.value
         })
     }
+*/
+
+    const handleInput = event => {
+        // console.log(event.target.value, event.target.name)
+        setItem({
+            ...item,
+            [event.target.name]: event.target.value
+        })
+    }
 
     const submitForm = event => {
         event.preventDefault();
-        console.log({
-            title: title,
-            price,
-            discountedPrice,
-            thumbnail
-        })
-        if(discountedPrice > price) {
+//        console.log({
+//            title: title,
+//            price,
+//            discountedPrice,
+//            thumbnail
+//        })
+        if(item.discountedPrice > item.price) {
             alert("Discounted Price cannot be greater than price")
             return;
         }
-        setItem({
-            title,
-            price,
-            discountedPrice,
-            thumbnail
-        })
+        console.log("Item Updated!", item)
+//        setItem({
+//            title,
+//            price,
+//            discountedPrice,
+//            thumbnail
+//        })
     }
 
     return (
@@ -108,40 +121,44 @@ const Product = () => {
                     <div className={"input-field"}>
                         <label htmlFor="title">Title</label>
                         <input 
+                            name = "title"
                             type="text" 
                             placeholder="Enter Title" 
-                            value={title} 
-                            onChange={handleTitle}
+                            value={item.title} 
+                            onChange={handleInput}
                             required
                         />
                     </div>
                     <div className={"input-field"}>
                         <label htmlFor="price">Price</label>
                         <input 
+                            name = "price"
                             type="number" 
                             placeholder="Enter Price" 
-                            value={price} 
-                            onChange={handlePrice}
+                            value={item.price} 
+                            onChange={handleInput}
                             required
                         />
                     </div>
                     <div className={"input-field"}>
-                        <label htmlFor="discountPrice">Discount Price</label>
+                        <label htmlFor="discountedPrice">Discount Price</label>
                         <input 
+                            name = "discountedPrice"
                             type="number" 
                             placeholder="Enter Discounted Price" 
-                            value={discountedPrice} 
-                            onChange={handleDiscountedPrice}
+                            value={item.discountedPrice} 
+                            onChange={handleInput}
                             required
                         />
                     </div>
                     <div className={"input-field"}>
                         <label htmlFor="thumbnail">Thumbnail</label>
                         <input 
+                            name = "thumbnail"
                             type="text" 
                             placeholder="Enter Thumbnail name" 
-                            value={thumbnail} 
-                            onChange={handleThumbnail}
+                            value={item.thumbnail} 
+                            onChange={handleInput}
                             required
                         />
                     </div>
@@ -152,9 +169,11 @@ const Product = () => {
             </div>
             <div>
                 <div>
-                    <ListItem data={items[0]} />
+                    <ListItem data={item} />
+                    {/*
                     <ListItem data={items[1]} />
-                    <ListItem data={items[2]} />
+                    <ListItem data={items[2]} /> 
+                    */}
                 </div>
             </div>
         </div>
