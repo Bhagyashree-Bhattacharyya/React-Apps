@@ -1,6 +1,6 @@
 import { useState } from "react"
 import ListItem from "./ListItems/ListItem"
-import Form from "../Form"
+//import Form from "../Form"
 
 // const item = {
 //     id: 0,
@@ -12,14 +12,30 @@ import Form from "../Form"
 
 
 const Product = () => {
-    const [item, setItem] = useState({
+    const [items, setItems] = useState([
+        {
         id: 0,
         title: "Title of this Item 1",
         price: 450,
         discountedPrice: 340,
         thumbnail: "placeholder.png"
-    })
-
+        },
+        {
+        id: 1,
+        title: "Title of this Item 2",
+        price: 450,
+        discountedPrice: 340,
+        thumbnail: "placeholder.png"
+        },
+        {
+        id: 2,
+        title: "Title of this Item 3",
+        price: 450,
+        discountedPrice: 340,
+        thumbnail: "placeholder.png"
+        }
+    ])
+/*
     const handleInput = event => {
         // console.log(event.target.value, event.target.name)
         setItem({
@@ -36,18 +52,25 @@ const Product = () => {
         }
         console.log("Item Updated!", item)
     }
-
+*/
     return (
-        <div className={"product-wrapper"}>
-            <div className={"form"}>
-                <Form item={item} onChangeInput={handleInput} onFormSubmission={submitForm}/>
-            </div>
-            <div>
-                <div>
-                    <ListItem data={item} />
+//        <div className={"product-wrapper"}>
+//            <div className={"form"}>
+//                <Form item={item} onChangeInput={handleInput} onFormSubmission={submitForm}/>
+//            </div>
+            <div className={"product-list"}>
+                <div className={"product-list--wrapper"}>
+                    {/* <ListItem data={item[0]} />
+                    <ListItem data={item[1]} /> */}
+                    {
+                        items.map(item => {
+                            console.log(item)
+                            return (<ListItem key={item.id} data={item}/>)
+                        })
+                    }
                 </div>
             </div>
-        </div>
+//        </div>
     )
 }
 

@@ -42,8 +42,9 @@ const ListItem = ({data}) => {
                     <h4>{data.title}</h4>
                 </div>
             </div>
+            {/*
             <div>
-            {/*<small className={"cart-msg"}>{message}</small>*/}
+            <small className={"cart-msg"}>{message}</small>
             <button className={"cart-add"}>
                 <span>Add to Cart</span>
                 <img src={AddToCardIcon} alt="cart icon" style={{ width: '20px', height: '20px' }}/>
@@ -56,6 +57,20 @@ const ListItem = ({data}) => {
                 </div>
             </span>
             </div>
+            */}
+            {
+                counter < 1 ?
+                <button className={"cart-add"} onClick={increaseCounterByOne}>
+                    <span>Add to Cart</span>
+                    <img src={AddToCardIcon} alt="Cart Icon"/>
+                </button>
+                :
+                <div className="cart-addon">
+                    <button onClick={descreaseCounterByOne}><span>-</span></button>
+                    <span>{counter}</span>
+                    <button onClick={increaseCounterByOne}><span>+</span></button>
+                </div>
+            }
         </div>
     )
 }
