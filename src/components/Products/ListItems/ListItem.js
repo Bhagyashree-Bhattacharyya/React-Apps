@@ -1,7 +1,7 @@
 import AddToCardIcon from "../../../assets/icons/add_cart.svg"
 import {useState} from "react"
 
-const ListItem = ({data}) => {
+const ListItem = ({ data, updateItemTitle }) => {
 /*
     const [message, setMessage] = useState("Not added to the cart yet!!")
 
@@ -42,6 +42,7 @@ const ListItem = ({data}) => {
                     <h4>{data.title}</h4>
                 </div>
             </div>
+            <button onClick={() => updateItemTitle(data.id)}>Update the title</button>
             {/*
             <div>
             <small className={"cart-msg"}>{message}</small>

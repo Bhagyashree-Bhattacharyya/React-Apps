@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ListItem from "./ListItems/ListItem"
+import axios from "axios"
 //import Form from "../Form"
 
 // const item = {
@@ -12,7 +13,9 @@ import ListItem from "./ListItems/ListItem"
 
 
 const Product = () => {
-    const [items, setItems] = useState([
+
+    const [items, setItems] = useState([])
+/*        
         {
         id: 0,
         title: "Title of this Item 1",
@@ -33,8 +36,16 @@ const Product = () => {
         price: 450,
         discountedPrice: 340,
         thumbnail: "placeholder.png"
+        },
+        {
+            id: 3,
+            title: "Title of this Item 4",
+            price: 100,
+            discountedPrice: 80,
+            thumbnail: "placeholder.png"
         }
     ])
+    */
 /*
     const handleInput = event => {
         // console.log(event.target.value, event.target.name)
@@ -53,6 +64,75 @@ const Product = () => {
         console.log("Item Updated!", item)
     }
 */
+    /*
+    useEffect(() => {
+        // fetch(`https://react-guide-2021-default-rtdb.firebaseio.com/items.json`)
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log(data)
+        // })
+        // .catch(error => {
+        //     console.log(error)
+        // })
+
+        axios.get('https://react-guide-2021-default-rtdb.firebaseio.com/items.json')
+        .then(response => {
+        //    console.log(response)
+            const data = response.data
+            const transformedData = data.map((item, index) => {
+                return {
+                    ...item,
+                    id: index
+                }
+                setItems(transformedData)
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }, [])
+    */
+
+    useEffect(() => {
+        async function fetchItems() {
+            try {
+                const response = await axios.get('https://react-guide-2021-default-rtdb.firebaseio.com/items.json')
+                const data = response.data
+                const transformedData = data.map((item, index) => {
+                    return {
+                        ...item,
+                        id: index
+                    }
+                })
+                setItems(transformedData)   
+            } 
+            catch (error) {
+                console.log("Error: ", error)
+                alert("Some error occurred");
+            }
+        }
+
+        fetchItems();
+    }, [])
+
+    const updateItemTitle = async (itemId) => {
+        console.log(`Item with ID: ${itemId}`)
+        try {
+            let title = `Update Title #Item-${itemId}`
+            await axios.patch(`https://react-guide-2021-default-rtdb.firebaseio.com/items/${itemId}.json`, {
+                title: title
+            })
+            let data = [...items]
+            let index = data.findIndex(e => e.id === itemId)
+            data[index]['title'] = title
+
+            setItems(data)
+        }
+        catch(error) {
+            console.log("Error Updating the data!");
+        }
+    }
+
     return (
 //        <div className={"product-wrapper"}>
 //            <div className={"form"}>
@@ -65,7 +145,7 @@ const Product = () => {
                     {
                         items.map(item => {
                             console.log(item)
-                            return (<ListItem key={item.id} data={item}/>)
+                            return (<ListItem key={item.id} data={item} updateItemTitle={updateItemTitle}/>)
                         })
                     }
                 </div>
