@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ListItem from "./ListItems/ListItem"
 import axios from "axios"
+import Loader from "../UI/Loader"
 //import Form from "../Form"
 
 // const item = {
@@ -15,6 +16,7 @@ import axios from "axios"
 const Product = () => {
 
     const [items, setItems] = useState([])
+    const [loader, setLoader] = useState(true)
 /*        
         {
         id: 0,
@@ -96,7 +98,7 @@ const Product = () => {
     useEffect(() => {
         async function fetchItems() {
             try {
-                const response = await axios.get('https://react-guide-2021-default-rtdb.firebaseio.com/items.json')
+                const response = await axios.get('https://test-project-e-comm-default-rtdb.firebaseio.com/items.json')
                 const data = response.data
                 const transformedData = data.map((item, index) => {
                     return {
@@ -109,6 +111,9 @@ const Product = () => {
             catch (error) {
                 console.log("Error: ", error)
                 alert("Some error occurred");
+            }
+            finally {
+                setLoader(false)
             }
         }
 
@@ -138,6 +143,7 @@ const Product = () => {
 //            <div className={"form"}>
 //                <Form item={item} onChangeInput={handleInput} onFormSubmission={submitForm}/>
 //            </div>
+        <>
             <div className={"product-list"}>
                 <div className={"product-list--wrapper"}>
                     {/* <ListItem data={item[0]} />
@@ -150,6 +156,8 @@ const Product = () => {
                     }
                 </div>
             </div>
+            { loader && <Loader/>}
+        </>
 //        </div>
     )
 }
