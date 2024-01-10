@@ -13,10 +13,11 @@ import Loader from "../UI/Loader"
 // }
 
 
-const Product = () => {
+const Product = ({ onAddItem, onRemoveItem }) => {
 
     const [items, setItems] = useState([])
     const [loader, setLoader] = useState(true)
+    const [presentItems, setPresentItems] = useState([])
 /*        
         {
         id: 0,
@@ -120,6 +121,7 @@ const Product = () => {
         fetchItems();
     }, [])
 
+    {/*
     const updateItemTitle = async (itemId) => {
         console.log(`Item with ID: ${itemId}`)
         try {
@@ -137,6 +139,25 @@ const Product = () => {
             console.log("Error Updating the data!");
         }
     }
+    */}
+
+    const handleAddItem = id => {
+        if(presentItems.indexOf(id) > -1) {
+            return;
+        }
+        setPresentItems([...presentItems, id])
+        onAddItem();
+    }
+
+    const handleRemoveItem = id => {
+        let index = presentItems.indexOf(id)
+        if(index > -1) {
+            let items = [...presentItems]
+            items.splice(index, 1)
+            setPresentItems([...items]);
+            onRemoveItem();
+        }
+    }
 
     return (
 //        <div className={"product-wrapper"}>
@@ -151,12 +172,12 @@ const Product = () => {
                     {
                         items.map(item => {
                             console.log(item)
-                            return (<ListItem key={item.id} data={item} updateItemTitle={updateItemTitle}/>)
+                            return (<ListItem onAdd={handleAddItem} onRemove={handleRemoveItem} key={item.id} data={item}/>)
                         })
                     }
                 </div>
             </div>
-            { loader && <Loader/>}
+            { loader && <Loader/> }
         </>
 //        </div>
     )
