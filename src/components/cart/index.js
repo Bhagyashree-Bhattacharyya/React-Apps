@@ -1,7 +1,8 @@
 import { Fragment, useState } from "react"
 import Modal from "../UI/Modal"
+import CartItem from "./CartItem"
 
-const Cart = ({ count }) => {
+const Cart = ({ count, items, onHandleEvent  }) => {
     const [showModal, setShowModal] = useState(false)
 
     const handleModal = () => {
@@ -27,7 +28,7 @@ const Cart = ({ count }) => {
                     <div className="checkout-modal">
                         <h2>Checkout Modal</h2>
                         <div className="checkout-modal_list">
-                            {
+                            {/*{
                                 count > 0 ?
                                 <div className="checkout-modal_list-item">
                                     <div className="img-wrap">
@@ -51,14 +52,33 @@ const Cart = ({ count }) => {
                                     </div>
                                 </div> :
                                 <div className="empty-cart">Please add something in your cart!</div>
-                            }
+                            }*/}
+                            {
+                                count > 0 ?
+                                items.map(item => {
+                                    return(<CartItem data={item}
+                                                      onEmitIncreaseItem={id => onHandleEvent(id, 1)} 
+                                                      onEmitDecreaseItem={id => onHandleEvent(id, -1)} 
+                                                      key={item.id}/>)
+                                })
+                                :
+                                <div className="empty-cart">Your Cart is Empty!</div>
+                            }                                    
                         </div>
                         { 
                             count > 0 &&
                             <div className="checkout-modal_footer">
                                 <div className="totalAmount">
                                     <h4>Total Amount: </h4>
-                                    <h4>2000 INR</h4>
+                                    {/*<h4>2000 INR</h4>*/}
+                                    <h4>
+                                        {
+                                            items.reduce((previous, current) => {
+                                                return previous + (current.discountedPrice * current.quantity)
+                                            }, 0)
+                                        }
+                                        <span style={{marginLeft: "4px"}}>INR</span>
+                                    </h4>
                                 </div>
                                 <button>Order Now</button>
                             </div>

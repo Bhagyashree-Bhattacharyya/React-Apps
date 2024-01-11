@@ -1,6 +1,6 @@
 import Cart from "../cart"
 
-const Header = ({ count }) => {
+const Header = ({ count, items, onHandleEvent }) => {
     return (
         <header>
             <div className="nav-brand">
@@ -40,7 +40,7 @@ const Header = ({ count }) => {
                 </svg>
             </div>
             <div className="cart-container">
-                <Cart count={count}/>
+                <Cart count={count} items={items} onHandleEvent={onHandleEvent}/>
             </div>
         </header>
     )
