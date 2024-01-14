@@ -13,7 +13,7 @@ import Loader from "../UI/Loader"
 // }
 
 
-const Product = ({ onAddItem, onRemoveItem, eventState }) => {
+const Product = () => {  // { onAddItem, onRemoveItem, eventState } passed as prop while not using redux store
 
     const [items, setItems] = useState([])
     const [loader, setLoader] = useState(true)
@@ -104,7 +104,7 @@ const Product = ({ onAddItem, onRemoveItem, eventState }) => {
                 const transformedData = data.map((item, index) => {
                     return {
                         ...item,
-                        quantity: 0,
+                    //    quantity: 0, //before using redux store
                         id: index
                     }
                 })
@@ -122,6 +122,8 @@ const Product = ({ onAddItem, onRemoveItem, eventState }) => {
         fetchItems();
     }, [])
 
+
+    {/* //Not using anymore at redux store
     useEffect(() => {
         if(eventState.id > -1) {
             if(eventState.type === 1) {
@@ -132,6 +134,7 @@ const Product = ({ onAddItem, onRemoveItem, eventState }) => {
             }
         }
     }, [eventState])
+    */}
 
     {/*
     const updateItemTitle = async (itemId) => {
@@ -152,6 +155,8 @@ const Product = ({ onAddItem, onRemoveItem, eventState }) => {
         }
     }
     */}
+
+    {/* //Not using anymore at redux store
 
     const handleAddItem = id => {
 //        if(presentItems.indexOf(id) > -1) {
@@ -182,6 +187,9 @@ const Product = ({ onAddItem, onRemoveItem, eventState }) => {
             onRemoveItem(data[index]);
         }
     }
+    */}
+
+
 
     return (
 //        <div className={"product-wrapper"}>
@@ -196,7 +204,7 @@ const Product = ({ onAddItem, onRemoveItem, eventState }) => {
                     {
                         items.map(item => {
                             console.log(item)
-                            return (<ListItem onAdd={handleAddItem} onRemove={handleRemoveItem} key={item.id} data={item}/>)
+                            return (<ListItem key={item.id} data={item}/>) // onAdd={handleAddItem} onRemove={handleRemoveItem} while not using redux
                         })
                     }
                 </div>

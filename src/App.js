@@ -6,6 +6,7 @@ import { useState } from "react";
 
 
 const App = () => {
+  {/* 
   const [cartItems, setCartItems] = useState([])
   const [eventQueue, setEventQueue] = useState({
     id: "",
@@ -46,12 +47,16 @@ const App = () => {
       type
     })
   }
+  */} // As we're using central-storage now for state management
+
 
   return (
     <div>
-        <Header count={cartItems.length} items={cartItems} onHandleEvent={handleEventQueue}/>
+      {/*  <Header count={cartItems.length} items={cartItems} onHandleEvent={handleEventQueue}/> */}
+        <Header/>          
         <Subheader/>
-        <Products onAddItem={handleAddItem} onRemoveItem={handleRemoveItem} eventState={eventQueue}/>
+        <Products/>
+      {/*  <Products onAddItem={handleAddItem} onRemoveItem={handleRemoveItem} eventState={eventQueue}/>  */}
     </div>
   );
 }
